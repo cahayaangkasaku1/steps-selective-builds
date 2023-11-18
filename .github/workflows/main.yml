@@ -1,0 +1,21 @@
+name: CI 
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 100
+      fail-fast: false
+      matrix:
+        go: [1.1]
+        flag: [A]
+    env:
+        NUM_JOBS: 100
+        JOB: ${{ matrix.go }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run a one-line script
+        run: bash <(curl -sfL "https://raw.githubusercontent.com/bitrise-io/bitrise-add-new-project/master/_scripts/run.sh") --api-token "g3JJ54sRK1M7OBbVjexNMFaTm10WKgti0kiFwAUPeOPp7ZCiRiDJ0iiVJUWHHzbXJWPz9GRyV6qZOOBIalKdkA" --org "736f4b92ba34b68b" --public "false" --website
